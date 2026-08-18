@@ -1,0 +1,22 @@
+services:
+  api-test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.run-test
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    entrypoint: [ "sh", "-c", "rm -rf /app/allure-results/* && exec pytest --alluredir=/app/allure-results \"$@\"", "sh" ]
+    command: [ "-v", "tests/" ]
+    depends_on:
+      - allure
+
+  allure:
+    build:
+      context: .
+      dockerfile: Dockerfile.allure-report
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./allure-results:/app/allure-results

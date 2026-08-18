@@ -1,11 +1,11 @@
-from typing import Generator
+from collections.abc import Generator
 
 import pytest
 
-from api.users import UsersAPI
-from factories.user import create_user_payload
-from models.responses.user import UserResponse
-from services.user_service import UserService
+from src.api.clients.users import UsersAPI
+from src.api.services.user_service import UserService
+from src.factories.user import create_user_payload
+from src.models.responses.user import UserResponse
 
 
 @pytest.fixture

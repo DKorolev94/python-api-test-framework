@@ -1,12 +1,12 @@
-from typing import Generator
+from collections.abc import Generator
 
 import pytest
 
-from api.posts import PostsAPI
-from factories.post import create_post_payload
-from models.responses.post import PostResponse
-from models.responses.user import UserResponse
-from services.post_service import PostService
+from src.api.clients.posts import PostsAPI
+from src.api.services.post_service import PostService
+from src.factories.post import create_post_payload
+from src.models.responses.post import PostResponse
+from src.models.responses.user import UserResponse
 
 
 @pytest.fixture

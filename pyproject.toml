@@ -1,0 +1,86 @@
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+line-length = 120
+indent-width = 4
+
+# Assume Python 3.12
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["ANN", "DTZ", "D100", "D104", "D107", "D203", "D205", "D213", "D400", "D401", "D406", "D407", "D408", "D409",
+    "D413", "D415", "T10", "FIX","FBT002", "FA", "TID", "INT", "B005", "B007", "B018", "COM812", "C416", "PT003",
+    "G", "PIE790", "RSE102", "SIM105", "SIM116", "TD", "PLC", "PLR09", "PLR1702", "PLR6", "TRY", "RUF001",
+    "RUF002", "RUF003", "RUF012", "ISC", "C901", "RET505", "S311", "FBT001", "SIM117", "PGH004", "PTH"]
+
+fixable = ["ALL"]
+unfixable = ["B905", "S"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = true
+line-ending = "lf"
+
+[tool.ruff.lint.flake8-pytest-style]
+parametrize-values-type = "tuple"
+parametrize-names-type = "csv"
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false
+
+[tool.ruff.lint.per-file-ignores]
+"**/models/*" = ["D101"]
+"**/mo_models/*" = ["D101"]
+"fixtures/*" = ["D101", "D102", "D103"]
+"tests/**/*" = ["S101", "S106"]
+"src/assertions/*" = ["S101"]
+
+[tool.pytest.ini_options]
+xfail_strict = true
+
+filterwarnings = [
+    "ignore::ResourceWarning",
+    "ignore::DeprecationWarning",
+    "ignore::urllib3.exceptions.NotOpenSSLWarning",
+]
+
+markers = [
+    "smoke: критичный путь",
+    "contract: контрактные тесты (схема, коды ответов, авторизация)",
+    "integration: интеграционные тесты (CRUD-сценарии, пагинация, вложенные ресурсы)",
+    "e2e: сквозные пользовательские сценарии",
+    "db: требует локальный Postgres (docker-compose up), см. docker-compose.yml",
+]

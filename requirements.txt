@@ -1,11 +1,9 @@
 pydantic[email]~=2.6
 pydantic-settings~=2.1
 faker
-PyHamcrest
 httpx
 python-dotenv~=1.0.1
 allure-pytest
-testit-adapter-pytest
 ruff
 psycopg2-binary~=2.9.9
 sshtunnel

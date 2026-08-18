@@ -1,0 +1,15 @@
+FROM eclipse-temurin:21-jre-jammy
+
+RUN apt-get update && apt-get install -y curl python3 inotify-tools && rm -rf /var/lib/apt/lists/*
+
+RUN ALLURE_URL=$(curl -fsSL https://api.github.com/repos/allure-framework/allure2/releases/latest \
+      | grep browser_download_url | grep '\.tgz"' | cut -d '"' -f4) \
+    && curl -fsSL "$ALLURE_URL" -o /tmp/allure.tgz \
+    && tar -xzf /tmp/allure.tgz -C /opt/ \
+    && mv /opt/allure-* /opt/allure \
+    && ln -s /opt/allure/bin/allure /usr/local/bin/allure \
+    && rm /tmp/allure.tgz
+
+WORKDIR /app
+
+ENTRYPOINT ["sh", "-c", "allure generate /app/allure-results -o /app/allure-report --clean; python3 -m http.server 5050 --directory /app/allure-report & while inotifywait -r -e modify,create,delete,moved_to /app/allure-results; do allure generate /app/allure-results -o /app/allure-report --clean; done"]
